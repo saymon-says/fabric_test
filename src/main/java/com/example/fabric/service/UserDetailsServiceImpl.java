@@ -1,9 +1,9 @@
-package exercise;
+package com.example.fabric.service;
 
-import exercise.repository.UserRepository;
+import com.example.fabric.model.User;
+import com.example.fabric.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,17 +18,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String lastName) throws UsernameNotFoundException {
 
-        // BEGIN
-        exercise.model.User findUser = repository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User findUser = repository.findByLastName(lastName);
 
         String userRole = String.valueOf(findUser.getRole());
 
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userRole));
 
-        return new User(email, findUser.getPassword(), authorities);
-        // END
+        return new org.springframework.security.core.userdetails.User(
+                findUser.getLastName(), findUser.getPassword(), authorities);
     }
 }

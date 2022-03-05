@@ -1,11 +1,29 @@
 -- Используйте эти данные для аутентификации
 
--- В самой базе пароль храним в зашифрованном виде
-
 -- USER
 -- username: Alexis password: 12345
-INSERT INTO USERS (ID, USERNAME, EMAIL, PASSWORD, ROLE) VALUES (1, 'Alexis', 'al@gmail.com', '$2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy', 1);
+INSERT INTO USERS (ID, LAST_NAME, PASSWORD, ROLE) VALUES (1, 'Alexis', '$2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy', 'USER');
+-- username: Sam password: 12345
+INSERT INTO USERS (ID, LAST_NAME, PASSWORD, ROLE) VALUES (2, 'Sam', '$2a$12$lP1HdpYa4yT./wnilPzf0OoxaVHJunEkkxw4SwkYL5obPjq.fG8Xy', 'USER');
 
 -- ADMIN
 -- password: admin_pass
-INSERT INTO USERS (ID, USERNAME, EMAIL, PASSWORD, ROLE) VALUES (2, 'John_admin', 'admin@gmail.com', '$2a$12$rbmC6cJOZqDMXY1oQxupzOliJ2.v9J1EXYiUY2a52qSTpBJVd3vyq', 0);
+INSERT INTO USERS (ID, LAST_NAME, PASSWORD, ROLE) VALUES (3, 'admin', '$2a$12$rbmC6cJOZqDMXY1oQxupzOliJ2.v9J1EXYiUY2a52qSTpBJVd3vyq', 'ADMIN');
+
+INSERT INTO POLLS (ID, CLOSED_AT, CREATED_AT, DESCRIPTION, NAME, USER_ID) VALUES (1, '2022-03-05', '2022-03-05', 'Первый важный опрос', 'Первый опрос', 1);
+INSERT INTO POLLS (ID, CLOSED_AT, CREATED_AT, DESCRIPTION, NAME, USER_ID) VALUES (2, '2022-03-05', '2022-03-05', 'Важнее первого опрос', 'Второй опрос', 1);
+
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (1, 'Как тебя зовут?', 'TEXT', 1);
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (2, 'Твой пол', 'SINGLE_ANSWER', 1);
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (3, 'Какие страны ты посетил?', 'MULTIPLE_ANSWER', 1);
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (4, 'Кем ты работаешь?', 'SINGLE_ANSWER', 2);
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (5, 'Твои обязанности?', 'TEXT', 2);
+INSERT INTO QUESTIONS (ID, QUESTION_TEXT, TYPE, POLL_ID) VALUES (6, 'ЧТо тебе нравится на текущем месте работы?', 'TEXT', 2);
+
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (1, 1, 'Семен', 1);
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (2, 1, 'Мужской', 1);
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (3, 1, 'Россия', 1);
+
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (4, 1, 'developer Java', 2);
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (5, 1, 'keypad click click', 2);
+INSERT INTO ANSWERS (QUESTION_ID, USER_ID, ANSWER, POLL_ID) VALUES (6, 1, 'all good', 2);

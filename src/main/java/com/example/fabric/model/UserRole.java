@@ -1,7 +1,6 @@
 package com.example.fabric.model;
 
-public enum Role {
-    ANONYMOUS,
+public enum UserRole {
     USER,
     ADMIN
 }
