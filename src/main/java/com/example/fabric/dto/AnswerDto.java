@@ -13,4 +13,6 @@ public class AnswerDto {
 
     private Long idQuestion;
 
+    private Long idUser;
+
 }

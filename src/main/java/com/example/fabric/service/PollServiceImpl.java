@@ -15,14 +15,11 @@ public class PollServiceImpl implements PollService {
 
     private PollRepository pollRepository;
 
-    private UserRepository userRepository;
-
     @Override
     public Poll create(PollDto pollDto) {
         Poll newPoll = new Poll();
         newPoll.setName(pollDto.getName());
         newPoll.setDescription(pollDto.getDescription());
-//        newPoll.setUser(userRepository.getById(pollDto.getUserId()));
         newPoll.setCreatedAt(pollDto.getCreatedAt());
         newPoll.setClosedAt(pollDto.getClosedAt());
         return pollRepository.save(newPoll);

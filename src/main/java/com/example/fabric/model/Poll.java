@@ -1,9 +1,7 @@
 package com.example.fabric.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -50,7 +47,7 @@ public class Poll {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Question> questions;
 
-        @OneToMany(mappedBy = "poll",
+    @OneToMany(mappedBy = "poll",
             orphanRemoval = true,
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
