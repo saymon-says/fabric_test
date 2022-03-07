@@ -15,8 +15,6 @@ public class PollDto {
 
     private String description;
 
-    private long userId;
-
     private Date createdAt;
 
     private Date closedAt;

@@ -14,13 +14,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.TemporalType.DATE;
 
@@ -47,17 +48,9 @@ public class Poll {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "poll",
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<Answer> answers;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     @JsonIgnore
-    private User user;
+    @ManyToMany(mappedBy = "polls")
+    private Set<User> users = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(DATE)

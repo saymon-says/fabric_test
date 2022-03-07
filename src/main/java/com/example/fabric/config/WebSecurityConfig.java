@@ -6,23 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
 
     public static final String POLL_PATH = "/polls";
     public static final String QUESTION_PATH = "/questions";
@@ -30,6 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String USER_PATH = "/users";
     public static final String ID_PATH = "/{id}";
 
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,17 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers(POST, POLL_PATH, QUESTION_PATH).hasAuthority(UserRole.ADMIN.name())
-                .antMatchers(GET, POLL_PATH,
-                        POLL_PATH + ID_PATH).hasAnyAuthority(UserRole.ADMIN.name(), UserRole.USER.name())
-                .antMatchers(GET, ANSWER_PATH,
-                        ANSWER_PATH + ID_PATH).hasAnyAuthority(UserRole.ADMIN.name(), UserRole.USER.name())
-                .antMatchers(GET, QUESTION_PATH,
-                        QUESTION_PATH + ID_PATH).hasAnyAuthority(UserRole.ADMIN.name(), UserRole.USER.name())
-                .antMatchers(PUT, POLL_PATH + ID_PATH,
-                        QUESTION_PATH + ID_PATH).hasAuthority(UserRole.ADMIN.name())
-                .antMatchers(DELETE, POLL_PATH + ID_PATH,
-                        QUESTION_PATH + ID_PATH).hasAuthority(UserRole.ADMIN.name())
+                .antMatchers("/polls/**",
+                        "/users/**",
+                        "/questions/**",
+                        "/answers/**").hasAnyAuthority(UserRole.ADMIN.name(), UserRole.USER.name())
+                .antMatchers("/**").permitAll()
                 .and().httpBasic();
     }
 

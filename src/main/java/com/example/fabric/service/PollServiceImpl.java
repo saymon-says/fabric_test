@@ -3,7 +3,6 @@ package com.example.fabric.service;
 import com.example.fabric.dto.PollDto;
 import com.example.fabric.model.Poll;
 import com.example.fabric.repository.PollRepository;
-import com.example.fabric.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
